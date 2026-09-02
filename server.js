@@ -18,6 +18,18 @@
         });
     });
 
+    // rota 2
+
+    app.get('/produtos/:id', (req, res)=>{
+        const id = req.params.id;
+        const sql = `SELECT * FROM produtos WHERE id = ${id}`
+
+        pool.query (sql, (erro, resultado) =>{
+            res.json(resultado.rows);
+        });
+    });
+
+    
 
     app.listen(PORT, () => {
         console.log(`servidor rodando com sucesso em http://localhost:${PORT}`);
