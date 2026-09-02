@@ -29,7 +29,21 @@
         });
     });
 
-    
+    // rota 3
+
+    app.post('/produtos', (req, res)=>{
+        const nome = req.body.nome;
+        const preco = req.body.preco;
+        const descricao = req.body.descricao;
+
+        const sql = `INSERT INTO produtos (nome, preco, descricao) VALUES
+        ('${nome}', '${preco}', '${descricao}')
+        `;
+
+        pool.query (sql, (erro, resultado)=>{
+            res.json(resultado);
+        });
+    });
 
     app.listen(PORT, () => {
         console.log(`servidor rodando com sucesso em http://localhost:${PORT}`);
