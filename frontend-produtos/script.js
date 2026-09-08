@@ -65,10 +65,26 @@ formulario.addEventListener("submit", async function(evento) {
         console.log("Erro ao cadastrar produto:", erro);
     }
 
-
 });
 
-// Executa a busca de produtos assim que a página abre
+
+/**
+ * 3. BUSCAR PRODUTOS POR ID (GET)
+ */
+
+async function buscarProdutosId() {
+    try {
+        const resposta = await fetch(url);
+        const produtos = await resposta.json();
+
+        console.log(produtos)
+
+    } catch (error) {
+        
+    }
+}
+
+
 buscarProdutos();
 
 
