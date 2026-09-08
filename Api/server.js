@@ -16,7 +16,7 @@
 
         pool.query(sql, (erro, resultado)=>{
             console.log(resultado);
-            res.json(resultado);
+            res.json(resultado.rows);
         });
     });
 
