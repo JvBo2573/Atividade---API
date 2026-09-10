@@ -15,7 +15,7 @@
         const sql = 'SELECT * FROM produtos';
 
         pool.query(sql, (erro, resultado)=>{
-            console.log(resultado);
+            console.log(resultado.rows);
             res.json(resultado.rows);
         });
     });
@@ -28,8 +28,25 @@
         const sql = `SELECT * FROM produtos WHERE id = ${id}`
 
         pool.query (sql, (erro, resultado) =>{
-            res.json(resultado.rows);
+
+            if(erro){
+                console.log(erro)
+
+                return res.status(500).json({
+                    mensagem: 'Não foi possivel buscar o produto'
+                });
+            }
+
+            if(resultado.rows.length === 0){
+                return res.status(404).json({
+                    mensagem: `Não foi possivel encontrar o produto ${id}`
+                });
+            }
+            res.json(resultado.rows[0]);
         });
+        
+        
+
     });
 
     // rota 3
@@ -44,7 +61,33 @@
         `;
 
         pool.query (sql, (erro, resultado)=>{
-            res.json(resultado);
+            res.json({
+                resultado, 
+                mensagem: 'Produto cadastrado com sucesso!'
+            });
+        });
+    });
+
+
+    // rota 4 delete
+
+    app.delete('/produtos/:id', (req, res)=>{
+        const id = req.params.id;
+        const sql = `
+        DELETE FROM produtos where id = $1
+        `;
+    
+        pool.query (sql, [id],(erro, resultado)=>{
+            if (erro) {
+                console.log(erro);
+                return res.status(500).json({
+                    mensagem: 'Erro ao excluir produto'
+                });
+            }
+
+            res.json({
+                mensagem: 'Produto excluído com sucesso'
+            });
         });
     });
 
